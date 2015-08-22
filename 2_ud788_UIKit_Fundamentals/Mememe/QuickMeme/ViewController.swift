@@ -21,7 +21,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        formatLabels()
+        formatLabels(firstTime: true)
     }
     
 
@@ -30,12 +30,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    func formatLabels() {
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
-        
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
+    func formatLabels(#firstTime:Bool) {
+        if (firstTime) {
+            topTextField.text = "TOP"
+            bottomTextField.text = "BOTTOM"
+        }
         
         topTextField.delegate = self
         bottomTextField.delegate = self
@@ -44,11 +43,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             NSStrokeColorAttributeName : UIColor.blackColor(),
             NSForegroundColorAttributeName : UIColor.whiteColor(),
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : 10
+            NSStrokeWidthAttributeName : -3
         ]
-        
+       
         topTextField.defaultTextAttributes = textAttributes
         bottomTextField.defaultTextAttributes = textAttributes
+        
+        topTextField.backgroundColor = UIColor.clearColor()
+        bottomTextField.backgroundColor = UIColor.clearColor()
+        
+        topTextField.autocapitalizationType = UITextAutocapitalizationType.AllCharacters
+        bottomTextField.autocapitalizationType = UITextAutocapitalizationType.AllCharacters
+        
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
     }
     
     
@@ -82,11 +90,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     // MARK: - UITextField Delegate Methods
-    
+
     func textFieldDidBeginEditing(textField: UITextField) {
         textField.text = ""
     }
-
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
